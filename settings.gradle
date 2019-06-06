@@ -1,1 +1,1 @@
-include ':app', ':featurea', ':featureb', ':navigation'
+include ':app', ':featurea', ':featureb', ':navigation', ':sweetfactory-compiler', ':sweetfactory-annotations', ':sweetfactory'
