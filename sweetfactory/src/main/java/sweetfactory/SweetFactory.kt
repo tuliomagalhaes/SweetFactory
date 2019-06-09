@@ -1,11 +1,16 @@
 package sweetfactory
 
-/*object SweetFactory {
+/*
+object SweetFactory {
 
-    fun <T> newInstanceOf(clazz: Class<T>): T {
-        val className = clazz.name + "Impl"
-        val c = Class.forName(className)
-        return c.newInstance() as T
+    fun <T> newInstanceOf(clazz: Class<T>): T? {
+        return try {
+            val className = clazz.name + "Impl"
+            val c = Class.forName(className)
+            c.newInstance() as T
+        } catch (ex: Exception) {
+            null
+        }
     }
 
 }*/

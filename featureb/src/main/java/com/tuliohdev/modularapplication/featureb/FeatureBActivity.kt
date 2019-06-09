@@ -31,7 +31,7 @@ class FeatureBActivity : AppCompatActivity() {
         setContentView(R.layout.activity_feature_b)
 
         findViewById<Button>(R.id.btOpenFeatureA).setOnClickListener {
-            startActivity(featureANavigator.newIntent(this))
+            startActivity(featureANavigator?.newIntent(this))
         }
     }
 }
