@@ -1,6 +1,6 @@
 package sweetfactory
 
-/*object SweetFactory {
+object SweetFactory {
 
     fun <T> newInstanceOf(clazz: Class<T>): T? {
         return try {
@@ -12,4 +12,4 @@ package sweetfactory
         }
     }
 
-}*/
+}
