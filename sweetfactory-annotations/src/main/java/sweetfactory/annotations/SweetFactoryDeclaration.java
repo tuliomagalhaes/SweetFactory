@@ -7,14 +7,14 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Tell the SweetFactory Compiler to generate a implementation for the annotated class
+ * Tell the SweetFactoryDeclaration Compiler to generate a implementation for the annotated class
  * <pre><code>
- * {@literal @}IntentFactory
+ * {@literal @}SweetFactoryDeclaration
  * public interface FeatureActivityIntentFactory {}
  * </code></pre>
  */
 @Target(TYPE)
 @Retention(RUNTIME)
-public @interface IntentFactory {
-    Class forInterface();
+public @interface SweetFactoryDeclaration {
+    Class factory();
 }

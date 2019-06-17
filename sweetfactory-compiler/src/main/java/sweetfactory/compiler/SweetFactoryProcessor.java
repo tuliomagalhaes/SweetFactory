@@ -27,7 +27,7 @@ public class SweetFactoryProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
-        for (Element element : roundEnvironment.getElementsAnnotatedWith(IntentFactory.class)) {
+        for (Element element : roundEnvironment.getElementsAnnotatedWith(SweetFactoryDeclaration.class)) {
             TypeElement typeElement = (TypeElement) element;
 
             JavaFile javaFile = generateJavaFile(typeElement);
@@ -44,11 +44,11 @@ public class SweetFactoryProcessor extends AbstractProcessor {
     }
 
     private JavaFile generateJavaFile(TypeElement typeElement) {
-        Annotation intentFactoryAnnotation = typeElement.getAnnotation(IntentFactory.class);
+        Annotation intentFactoryAnnotation = typeElement.getAnnotation(SweetFactoryDeclaration.class);
 
         TypeMirror typeMirror = null;
         try {
-            ((IntentFactory) intentFactoryAnnotation).forInterface();
+            ((SweetFactoryDeclaration) intentFactoryAnnotation).factory();
         } catch (MirroredTypeException mte) {
             typeMirror = mte.getTypeMirror();
         }
@@ -72,7 +72,7 @@ public class SweetFactoryProcessor extends AbstractProcessor {
         for (Element innerElement : typeElement.getEnclosedElements()) {
             if (innerElement instanceof ExecutableElement &&
                 innerElement.getKind() == ElementKind.METHOD &&
-                innerElement.getAnnotation(IntentFactoryMethod.class) != null) {
+                innerElement.getAnnotation(SweetFactoryMethod.class) != null) {
                 ExecutableElement executableElement = (ExecutableElement) innerElement;
 
                 final StringBuilder parametersName = new StringBuilder();
@@ -107,7 +107,7 @@ public class SweetFactoryProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return new TreeSet<>(Collections.singletonList(
-                IntentFactory.class.getCanonicalName()
+                SweetFactoryDeclaration.class.getCanonicalName()
         ));
     }
 

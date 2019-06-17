@@ -7,16 +7,15 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.tuliohdev.modularapplication.FeatureAActivityIntentFactory
 import com.tuliohdev.modularapplication.FeatureBActivityIntentFactory
-
 import sweetfactory.SweetFactory
-import sweetfactory.annotations.IntentFactory
-import sweetfactory.annotations.IntentFactoryMethod
+import sweetfactory.annotations.SweetFactoryDeclaration
+import sweetfactory.annotations.SweetFactoryMethod
 
-@IntentFactory(forInterface = FeatureAActivityIntentFactory::class)
+@SweetFactoryDeclaration(factory = FeatureAActivityIntentFactory::class)
 class FeatureAActivity : AppCompatActivity() {
 
     companion object {
-        @IntentFactoryMethod
+        @SweetFactoryMethod
         @JvmStatic
         fun newIntent(context: Context): Intent {
             return Intent(context, FeatureAActivity::class.java)
