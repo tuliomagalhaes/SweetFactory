@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.tuliohdev.modularapplication.FeatureAActivityIntentFactory
-import com.tuliohdev.modularapplication.FeatureBActivityIntentFactory
+import com.tuliohdev.modularapplication.FeatureBFactory
 import sweetfactory.SweetFactory
 import sweetfactory.annotations.SweetFactoryDeclaration
 import sweetfactory.annotations.SweetFactoryMethod
@@ -22,7 +22,7 @@ class FeatureAActivity : AppCompatActivity() {
         }
     }
 
-    private var featureBNavigator = SweetFactory.newInstanceOf(FeatureBActivityIntentFactory::class.java)
+    private var featureBNavigator = SweetFactory.newInstanceOf(FeatureBFactory::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class FeatureAActivity : AppCompatActivity() {
         setContentView(R.layout.activity_feature_a)
 
         findViewById<Button>(R.id.btOpenFeatureB).setOnClickListener {
-            startActivity(featureBNavigator?.newIntent(this))
+            startActivity(featureBNavigator?.newIntentForFeatureBActivity(this))
         }
     }
 

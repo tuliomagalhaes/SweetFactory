@@ -12,6 +12,10 @@ class MessagerUtil {
         this.messager = messager;
     }
 
+    public void error(String message, Object... args) {
+        printMessage(Kind.ERROR, null, message, args);
+    }
+
     public void error(Element element, String message, Object... args) {
         printMessage(Kind.ERROR, element, message, args);
     }
@@ -25,7 +29,11 @@ class MessagerUtil {
             message = String.format(message, args);
         }
 
-        messager.printMessage(kind, message, element);
+        if (element == null) {
+            messager.printMessage(kind, message);
+        } else {
+            messager.printMessage(kind, message, element);
+        }
     }
 
 }

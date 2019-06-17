@@ -27,23 +27,42 @@ public class SweetFactoryProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
+        Map<String, FactoryImplementation> factories = new HashMap<>();
+
         for (Element element : roundEnvironment.getElementsAnnotatedWith(SweetFactoryDeclaration.class)) {
             TypeElement typeElement = (TypeElement) element;
 
-            JavaFile javaFile = generateJavaFile(typeElement);
+            final String factoryClassName = getClassNameOfFactory(typeElement);
+
+            FactoryImplementation factoryImplementation;
+            if (factories.containsKey(factoryClassName)) {
+                factoryImplementation = factories.get(factoryClassName);
+            } else {
+                factoryImplementation = generateFactoryImplementation(factoryClassName);
+                factories.put(factoryClassName, factoryImplementation);
+            }
+
+            implementMethods(factoryImplementation.getTypeSpecBuilder(), typeElement);
+        }
+
+        for (Map.Entry<String, FactoryImplementation> entry : factories.entrySet()) {
+            FactoryImplementation factory = entry.getValue();
+
+            JavaFile javaFile = JavaFile.builder(factory.getPackageName(),
+                    factory.getTypeSpecBuilder().build()).build();
 
             try {
                 javaFile.writeTo(processingEnv.getFiler());
             } catch (IOException e) {
                 final String className = javaFile.toJavaFileObject().getName().replace("/", ".");
-                messagerUtil.error(element, "Error when trying to generate code for %s", className);
+                messagerUtil.error("Error when trying to generate code for %s", className);
             }
         }
 
         return false;
     }
 
-    private JavaFile generateJavaFile(TypeElement typeElement) {
+    private String getClassNameOfFactory(TypeElement typeElement) {
         Annotation intentFactoryAnnotation = typeElement.getAnnotation(SweetFactoryDeclaration.class);
 
         TypeMirror typeMirror = null;
@@ -53,22 +72,25 @@ public class SweetFactoryProcessor extends AbstractProcessor {
             typeMirror = mte.getTypeMirror();
         }
 
-        final String fullFactoryClassName = typeMirror.toString();
-        final String className = fullFactoryClassName.substring(fullFactoryClassName.lastIndexOf(".") + 1);
-        final String packageName = fullFactoryClassName.replace("." + className, "");
+        return typeMirror.toString();
+    }
+
+    private FactoryImplementation generateFactoryImplementation(String factoryClassName) {
+        final String className = factoryClassName.substring(factoryClassName.lastIndexOf(".") + 1);
+        final String packageName = factoryClassName.replace("." + className, "");
 
         ClassName interfaceClass = ClassName.get(packageName, className);
-        TypeSpec.Builder implementationClass = TypeSpec.classBuilder(className + "Impl")
+
+        TypeSpec.Builder builder = TypeSpec.classBuilder(className + "Impl")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(interfaceClass);
 
-        final String fullActivityClassName = typeElement.getQualifiedName().toString();
-        implementMethod(implementationClass, fullActivityClassName, typeElement);
-
-        return JavaFile.builder(packageName, implementationClass.build()).build();
+        return new FactoryImplementation(packageName, builder);
     }
 
-    private void implementMethod(TypeSpec.Builder builder, String fullActivityClassName, TypeElement typeElement) {
+    private void implementMethods(TypeSpec.Builder builder, TypeElement typeElement) {
+        final String factoryImplementationClassName = typeElement.getQualifiedName().toString();
+
         for (Element innerElement : typeElement.getEnclosedElements()) {
             if (innerElement instanceof ExecutableElement &&
                 innerElement.getKind() == ElementKind.METHOD &&
@@ -96,7 +118,7 @@ public class SweetFactoryProcessor extends AbstractProcessor {
                     }
                 }
 
-                final String returnStatement = String.format("return %s.%s(%s)", fullActivityClassName, methodName, parametersName.toString());
+                final String returnStatement = String.format("return %s.%s(%s)", factoryImplementationClassName, methodName, parametersName.toString());
                 methodSpec.addStatement(returnStatement);
 
                 builder.addMethod(methodSpec.build());
