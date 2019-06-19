@@ -11,6 +11,7 @@ buildscript {
 
     ext.deps = [
         kotlinStdLibJdk7: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+
         androidx: [
             appcompat: 'androidx.appcompat:appcompat:1.0.2',
             corektx: 'androidx.core:core-ktx:1.0.2',
@@ -23,11 +24,15 @@ buildscript {
         jcenter()
         
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.16'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.16'
     }
 }
 

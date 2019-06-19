@@ -7,3 +7,5 @@ dependencies {
     implementation project(':sweetfactory-annotations')
     implementation 'com.squareup:javapoet:1.11.1'
 }
+
+apply from: rootProject.file('gradle/gradle-publisher.gradle')

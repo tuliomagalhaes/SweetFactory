@@ -9,3 +9,5 @@ dependencies {
 
     implementation deps.kotlinStdLibJdk7
 }
+
+apply from: rootProject.file('gradle/gradle-publisher.gradle')
