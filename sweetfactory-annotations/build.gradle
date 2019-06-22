@@ -1,6 +1,10 @@
-apply plugin: 'java-library'
+apply plugin: 'kotlin'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    implementation deps.kotlinStdLibJdk7
+}
 
 apply from: rootProject.file('gradle/gradle-publisher.gradle')

@@ -1,13 +1,12 @@
-apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-    api project(":sweetfactory-annotations")
-
     implementation deps.kotlinStdLibJdk7
+
+    api project(":sweetfactory-annotations")
 }
 
 apply from: rootProject.file('gradle/gradle-publisher.gradle')
