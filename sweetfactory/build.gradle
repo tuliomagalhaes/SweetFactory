@@ -7,6 +7,9 @@ dependencies {
     implementation deps.kotlinStdLibJdk7
 
     api project(":sweetfactory-annotations")
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.hamkrest
 }
 
 apply from: rootProject.file('gradle/gradle-publisher.gradle')
