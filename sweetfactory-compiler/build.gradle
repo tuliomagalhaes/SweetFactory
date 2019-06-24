@@ -9,9 +9,14 @@ dependencies {
 
     implementation project(':sweetfactory-annotations')
 
-    implementation 'com.squareup:javapoet:1.11.1'
-    implementation "com.google.auto.service:auto-service:1.0-rc2"
-    kapt "com.google.auto.service:auto-service:1.0-rc2"
+    implementation deps.javapoet
+    implementation deps.googleAutoService
+    kapt deps.googleAutoService
+
+    testImplementation deps.test.googleCompileTesting
+    testImplementation deps.test.hamkrest
+    testImplementation deps.test.mockk
+    testImplementation deps.test.junit
 }
 
 apply from: rootProject.file('gradle/gradle-publisher.gradle')
