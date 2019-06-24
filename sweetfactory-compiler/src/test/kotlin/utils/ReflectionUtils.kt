@@ -3,22 +3,13 @@ package utils
 import java.lang.reflect.Field
 
 fun <T> Any.getPrivateField(fieldName: String): T {
-    try {
-        return getFieldFromHierarchy(this.javaClass, fieldName) as T
-    } catch (e: Exception) {
-        throw RuntimeException("Unable to get value from a private field.", e)
-    }
-
+    val field = getFieldFromHierarchy(this.javaClass, fieldName)
+    return field.get(this) as T
 }
 
 fun Any.setPrivateField(fieldName: String, fieldValue: Any) {
-    try {
-        val field = getFieldFromHierarchy(this.javaClass, fieldName)
-        field.set(this, fieldValue)
-    } catch (e: Exception) {
-        throw RuntimeException("Unable to set value on a private field.", e)
-    }
-
+    val field = getFieldFromHierarchy(this.javaClass, fieldName)
+    field.set(this, fieldValue)
 }
 
 private fun getFieldFromHierarchy(clazz: Class<*>, fieldName: String): Field {
