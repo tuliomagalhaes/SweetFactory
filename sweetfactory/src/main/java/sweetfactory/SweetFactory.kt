@@ -1,7 +1,14 @@
 package sweetfactory
 
+import kotlin.reflect.KClass
+
 object SweetFactory {
 
+    @JvmStatic
+    fun <T : Any> newInstanceOf(clazz: KClass<T>): T? = newInstanceOf(clazz.java)
+
+    @JvmStatic
+    @Suppress("UNCHECKED_CAST")
     fun <T> newInstanceOf(clazz: Class<T>): T? {
         return try {
             val className = clazz.name + "Impl"
