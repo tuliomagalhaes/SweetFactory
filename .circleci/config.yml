@@ -18,8 +18,11 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}}
       - run:
+          name: Run Detekt
+          command: ./gradlew detektCheck
+      - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: ./gradlew test
       - store_artifacts:
           path: sweetfactory/build/reports
           destination: sweetfactory-reports
