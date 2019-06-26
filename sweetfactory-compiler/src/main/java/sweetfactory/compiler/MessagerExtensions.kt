@@ -19,7 +19,7 @@ internal fun Messager.warning(element: Element, message: String, vararg args: An
 private fun Messager.printMessage(kind: Diagnostic.Kind, element: Element?, message: String, vararg args: Any) {
     var message = message
     if (args.isNotEmpty()) {
-        message = String.format(message, *args)
+        message = String.format(message, args)
     }
 
     if (element == null) {
