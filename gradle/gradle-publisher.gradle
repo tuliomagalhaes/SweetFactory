@@ -89,12 +89,9 @@ artifacts {
     archives sourcesJar
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 bintray {
-    user = properties.getProperty("BINTRAY_USER")
-    key = properties.getProperty("BINTRAY_APIKEY")
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_APIKEY')
 
     configurations = ['archives']
     pkg {

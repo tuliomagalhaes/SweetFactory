@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/SweetFactory
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew buildDependents
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}}
+      - run:
+          name: Run Tests
+          command: ./gradlew lint test
+      - store_artifacts:
+          path: sweetfactory/build/reports
+          destination: sweetfactory-reports
+      - store_artifacts:
+          path: sweetfactory-annotations/build/reports
+          destination: sweetfactory-annotations-reports
+      - store_artifacts:
+          path: sweetfactory-compiler/build/reports
+          destination: sweetfactory-compiler-reports
+      - store_test_results:
+          path: sweetfactory/build/test-results
+      - store_test_results:
+          path: sweetfactory-annotations/build/test-results
+      - store_test_results:
+          path: sweetfactory-comiler/build/test-results
