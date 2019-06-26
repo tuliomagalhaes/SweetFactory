@@ -2,6 +2,12 @@ package sweetfactory
 
 import kotlin.reflect.KClass
 
+/**
+ * Create an instance of a factory implemented by SweetFactory processor
+ * <pre>`
+ * SweetFactory.newInstanceOf(FeatureActivityFactory::class)
+`</pre> *
+ */
 object SweetFactory {
 
     @JvmStatic
