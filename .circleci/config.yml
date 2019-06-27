@@ -49,19 +49,19 @@ jobs:
       - store_test_results:
           path: sweetfactory/build/test-results
       - codecov/upload:
-          file: sweetfactory/build/test-results
+          file: sweetfactory/build/reports/jacoco/test
       - store_artifacts:
           path: sweetfactory-annotations/build/reports
       - store_test_results:
           path: sweetfactory-annotations/build/test-results
       - codecov/upload:
-          file: sweetfactory-annotations/build/test-results
+          file: sweetfactory-annotations/build/reports/jacoco/test
       - store_artifacts:
           path: sweetfactory-comiler/build/reports
       - store_test_results:
           path: sweetfactory-comiler/build/test-results
       - codecov/upload:
-          file: sweetfactory-comiler/build/test-results
+          file: sweetfactory-comiler/build/reports/jacoco/test
 
   ## Run Code Quality
   code_quality:
