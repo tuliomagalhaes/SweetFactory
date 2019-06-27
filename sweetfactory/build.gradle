@@ -8,6 +8,22 @@ dependencies {
     implementation deps.kotlinStdLibJdk7
 
     api project(":sweetfactory-annotations")
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.hamkrest
+}
+
+test.finalizedBy(jacocoTestReport)
+
+jacoco {
+    toolVersion = versions.jacoco
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
 }
 
 test.finalizedBy(jacocoTestReport)
