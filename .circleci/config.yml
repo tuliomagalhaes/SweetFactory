@@ -1,0 +1,105 @@
+version: 2
+
+references:
+  ## Docker image configurations
+  android_config: &android_config
+    working_directory: ~/SweetFactory
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+
+  ## Cache
+  gradle_key: &gradle_key
+                jars-{{ checksum "build.gradle" }}
+
+  restore_gradle_cache: &restore_gradle_cache
+    restore_cache:
+      key: *gradle_key
+
+  save_gradle_cache: &save_gradle_cache
+    save_cache:
+      key: *gradle_key
+      paths:
+        - ~/.gradle
+
+  ## Dependencies
+  android_dependencies: &android_dependencies
+    run:
+      name: Download Android Dependencies
+      command: ./gradlew androidDependencies
+
+jobs:
+  ## Run unit tests
+  unit_test:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_gradle_cache
+      - *android_dependencies
+      - *save_gradle_cache
+      - run:
+          name: Run unit tests
+          command: ./gradlew test jacocoTestReport
+      - store_artifacts:
+          path: sweetfactory/build/reports
+      - store_test_results:
+          path: sweetfactory/build/test-results
+      - store_artifacts:
+          path: sweetfactory-annotations/build/reports
+      - store_test_results:
+          path: sweetfactory-annotations/build/test-results
+      - store_artifacts:
+          path: sweetfactory-comiler/build/reports
+      - store_test_results:
+          path: sweetfactory-comiler/build/test-results
+
+  ## Run Code Quality
+  code_quality:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_gradle_cache
+      - *android_dependencies
+      - *save_gradle_cache
+      - run:
+          name: Run Detekt
+          command: ./gradlew detekt
+      - store_artifacts:
+          path: sweetfactory/build/reports
+          destination: sweetfactory-reports
+      - store_artifacts:
+          path: sweetfactory-annotations/build/reports
+          destination: sweetfactory-annotations-reports
+      - store_artifacts:
+          path: sweetfactory-compiler/build/reports
+          destination: sweetfactory-compiler-reports
+
+  ## Deploy to Bintray
+  deploy_bintray:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_gradle_cache
+      - *android_dependencies
+      - *save_gradle_cache
+      - run:
+          name: Deploy to Bintray
+          command: ./gradlew bintrayUpload
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - unit_test
+      - code_quality:
+          requires:
+            - unit_test
+      - deploy_bintray:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test_unit
+            - code_quality
