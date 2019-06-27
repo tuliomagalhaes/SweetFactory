@@ -101,5 +101,5 @@ workflows:
               only:
                 - master
           requires:
-            - test_unit
+            - unit_test
             - code_quality
