@@ -56,8 +56,6 @@ jobs:
           path: sweetfactory-comiler/build/reports
       - store_test_results:
           path: sweetfactory-comiler/build/test-results
-      - codecov/upload:
-          file: {{ coverage_report_filepath }}
 
   ## Run Code Quality
   code_quality:
