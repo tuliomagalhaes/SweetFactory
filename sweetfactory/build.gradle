@@ -1,4 +1,5 @@
 apply plugin: 'kotlin'
+apply plugin: 'jacoco'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -7,6 +8,19 @@ dependencies {
     implementation deps.kotlinStdLibJdk7
 
     api project(":sweetfactory-annotations")
+}
+
+test.finalizedBy(jacocoTestReport)
+
+jacoco {
+    toolVersion = versions.jacoco
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
 }
 
 apply from: rootProject.file('gradle/gradle-publisher.gradle')
