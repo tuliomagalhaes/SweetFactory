@@ -94,7 +94,7 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
+  build_and_test:
     jobs:
       - unit_test
       - code_quality:
