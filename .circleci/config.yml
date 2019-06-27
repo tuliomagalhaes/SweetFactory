@@ -48,14 +48,20 @@ jobs:
           path: sweetfactory/build/reports
       - store_test_results:
           path: sweetfactory/build/test-results
+      - codecov/upload:
+          file: sweetfactory/build/test-results
       - store_artifacts:
           path: sweetfactory-annotations/build/reports
       - store_test_results:
           path: sweetfactory-annotations/build/test-results
+      - codecov/upload:
+          file: sweetfactory-annotations/build/test-results
       - store_artifacts:
           path: sweetfactory-comiler/build/reports
       - store_test_results:
           path: sweetfactory-comiler/build/test-results
+      - codecov/upload:
+          file: sweetfactory-comiler/build/test-results
 
   ## Run Code Quality
   code_quality:
