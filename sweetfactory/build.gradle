@@ -26,4 +26,14 @@ jacocoTestReport {
     }
 }
 
+test.finalizedBy(jacocoTestReport)
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination = file("${buildDir}/reports/jacoco/report.xml")
+        csv.enabled false
+    }
+}
+
 apply from: rootProject.file('gradle/gradle-publisher.gradle')

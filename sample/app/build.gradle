@@ -24,7 +24,7 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.corektx
     implementation deps.androidx.constraintlayout
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation deps.google.material
     implementation deps.kotlinStdLibJdk7
 
     implementation project(':sample:featurea')

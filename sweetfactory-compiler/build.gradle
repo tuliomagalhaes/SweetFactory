@@ -11,8 +11,8 @@ dependencies {
     implementation project(':sweetfactory-annotations')
 
     implementation deps.javapoet
-    implementation deps.googleAutoService
-    kapt deps.googleAutoService
+    implementation deps.google.autoService
+    kapt deps.google.autoService
 
     testImplementation deps.test.googleCompileTesting
     testImplementation deps.test.hamkrest
@@ -22,13 +22,10 @@ dependencies {
 
 test.finalizedBy(jacocoTestReport)
 
-jacoco {
-    toolVersion = versions.jacoco
-}
-
 jacocoTestReport {
     reports {
         xml.enabled true
+        xml.destination = file("${buildDir}/reports/jacoco/report.xml")
         csv.enabled false
     }
 }
