@@ -11,8 +11,8 @@ dependencies {
     implementation project(':sweetfactory-annotations')
 
     implementation deps.javapoet
-    implementation deps.googleAutoService
-    kapt deps.googleAutoService
+    implementation deps.google.autoService
+    kapt deps.google.autoService
 
     testImplementation deps.test.googleCompileTesting
     testImplementation deps.test.hamkrest

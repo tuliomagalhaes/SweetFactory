@@ -13,7 +13,11 @@ buildscript {
         kotlinStdLibJdk7: "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
 
         javapoet: 'com.squareup:javapoet:1.11.1',
-        googleAutoService: "com.google.auto.service:auto-service:1.0-rc2",
+
+        google: [
+            autoService: "com.google.auto.service:auto-service:1.0-rc2",
+            material: 'com.google.android.material:material:1.0.0'
+        ],
 
         androidx: [
             appcompat: 'androidx.appcompat:appcompat:1.0.2',
