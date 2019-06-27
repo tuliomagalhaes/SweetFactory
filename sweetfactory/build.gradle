@@ -62,4 +62,17 @@ jacocoTestReport {
     }
 }
 
+test.finalizedBy(jacocoTestReport)
+
+jacoco {
+    toolVersion = versions.jacoco
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
+}
+
 apply from: rootProject.file('gradle/gradle-publisher.gradle')
