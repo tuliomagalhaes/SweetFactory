@@ -2,13 +2,18 @@ package sweetfactory.compiler
 
 import com.google.auto.service.AutoService
 import com.google.common.annotations.VisibleForTesting
-import com.squareup.javapoet.*
+import com.squareup.javapoet.JavaFile
 import sweetfactory.annotations.SweetFactoryDeclaration
 import java.io.IOException
-import java.util.*
-import javax.annotation.processing.*
+import java.util.TreeSet
+import javax.annotation.processing.Processor
+import javax.annotation.processing.ProcessingEnvironment
+import javax.annotation.processing.RoundEnvironment
+import javax.annotation.processing.SupportedSourceVersion
+import javax.annotation.processing.AbstractProcessor
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
+import kotlin.collections.HashMap
 
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -26,7 +31,7 @@ class SweetFactoryProcessor : AbstractProcessor() {
 
     @VisibleForTesting
     internal fun init(processingEnvironment: ProcessingEnvironment?,
-             sweetFactoryDeclarationImplementer: SweetFactoryDeclarationImplementer) {
+                      sweetFactoryDeclarationImplementer: SweetFactoryDeclarationImplementer) {
         super.init(processingEnvironment)
         this.sweetFactoryDeclarationImplementer = sweetFactoryDeclarationImplementer
     }
@@ -70,6 +75,5 @@ class SweetFactoryProcessor : AbstractProcessor() {
 
         return false
     }
-
 
 }

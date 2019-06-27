@@ -2,6 +2,8 @@ buildscript {
     ext.versions = [
         kotlin: '1.3.31',
 
+        jacoco: '0.8.3',
+
         compileSdkVersion: 28,
         minSdkVersion: 21,
         targetSdkVersion: 28,
@@ -11,7 +13,11 @@ buildscript {
         kotlinStdLibJdk7: "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
 
         javapoet: 'com.squareup:javapoet:1.11.1',
-        googleAutoService: "com.google.auto.service:auto-service:1.0-rc2",
+
+        google: [
+            autoService: "com.google.auto.service:auto-service:1.0-rc2",
+            material: 'com.google.android.material:material:1.0.0'
+        ],
 
         androidx: [
             appcompat: 'androidx.appcompat:appcompat:1.0.2',
@@ -44,7 +50,18 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC10"
+}
+
 allprojects {
+    apply from: "$rootDir/gradle/detekt.gradle"
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = versions.jacoco
+    }
+
     repositories {
         google()
         jcenter()

@@ -35,38 +35,47 @@ internal class SweetFactoryDeclarationImplementer {
                 innerElement.getKind() == ElementKind.METHOD &&
                 innerElement.getAnnotation(SweetFactoryMethod::class.java) != null) {
 
-                val parametersName = StringBuilder()
                 val methodName = innerElement.simpleName.toString()
                 val methodSpec = MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC)
                     .addAnnotation(Override::class.java)
                     .returns(TypeName.get(innerElement.returnType))
 
-                val parametersCount = innerElement.parameters.size
-                for (i in 0 until parametersCount) {
-                    val parameter = innerElement.parameters[i]
-
-                    val parameterName = parameter.simpleName.toString()
-
-                    methodSpec.addParameter(TypeName.get(parameter.asType()), parameterName)
-                    parametersName.append(parameterName)
-
-                    if (i + 1 < parametersCount) {
-                        parametersName.append(", ")
-                    }
-                }
+                val parametersName = addMethodParametersAndReturnAllParameters(innerElement, methodSpec)
 
                 val returnStatement = String.format(
                     "return %s.%s(%s)",
                     factoryImplementationClassName,
                     methodName,
-                    parametersName.toString()
+                    parametersName
                 )
                 methodSpec.addStatement(returnStatement)
 
                 builder.addMethod(methodSpec.build())
             }
         }
+    }
+
+    private fun addMethodParametersAndReturnAllParameters(element: ExecutableElement,
+                                                          methodSpec: MethodSpec.Builder): String {
+        val parametersCount = element.parameters.size
+        val parametersName = StringBuilder()
+
+        for (i in 0 until parametersCount) {
+            val parameter = element.parameters[i]
+
+            val parameterName = parameter.simpleName.toString()
+
+            methodSpec.addParameter(TypeName.get(parameter.asType()), parameterName)
+
+            parametersName.append(parameterName)
+
+            if (i + 1 < parametersCount) {
+                parametersName.append(", ")
+            }
+        }
+
+        return parametersName.toString()
     }
 
 }
