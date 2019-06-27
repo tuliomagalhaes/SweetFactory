@@ -52,10 +52,6 @@ jobs:
           file: sweetfactory/build/reports/jacoco/report.xml
       - store_artifacts:
           path: sweetfactory-annotations/build/reports
-      - store_test_results:
-          path: sweetfactory-annotations/build/test-results
-      - codecov/upload:
-          file: sweetfactory-annotations/build/reports/jacoco/report.xml
       - store_artifacts:
           path: sweetfactory-comiler/build/reports
       - store_test_results:
