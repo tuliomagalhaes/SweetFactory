@@ -53,11 +53,11 @@ jobs:
       - store_artifacts:
           path: sweetfactory-annotations/build/reports
       - store_artifacts:
-          path: sweetfactory-comiler/build/reports
+          path: sweetfactory-compiler/build/reports
       - store_test_results:
-          path: sweetfactory-comiler/build/test-results
+          path: sweetfactory-compiler/build/test-results
       - codecov/upload:
-          file: sweetfactory-comiler/build/reports/jacoco/report.xml
+          file: sweetfactory-compiler/build/reports/jacoco/report.xml
 
   ## Run Code Quality
   code_quality:
