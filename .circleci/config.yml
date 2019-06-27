@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.5
 
 references:
   ## Docker image configurations
@@ -53,6 +56,8 @@ jobs:
           path: sweetfactory-comiler/build/reports
       - store_test_results:
           path: sweetfactory-comiler/build/test-results
+      - codecov/upload:
+          file: {{ coverage_report_filepath }}
 
   ## Run Code Quality
   code_quality:
