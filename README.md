@@ -19,7 +19,7 @@ Download
  
 ```groovy 
 dependencies {
- 	implementation 'com.tuliomagalhaes:sweetfactory:1.0.0'
+    implementation 'com.tuliomagalhaes:sweetfactory:1.0.0'
 }
 ```
  
@@ -27,7 +27,7 @@ dependencies {
  
 ```groovy
 dependencies {
- 	kapt 'com.tuliomagalhaes:sweetfactory-compiler:1.0.0'
+    kapt 'com.tuliomagalhaes:sweetfactory-compiler:1.0.0'
 }
 ```
  
@@ -35,7 +35,7 @@ dependencies {
  
 ```groovy
 dependencies {
-  	implementation 'com.tuliomagalhaes:sweetfactory:1.0.0'
+    implementation 'com.tuliomagalhaes:sweetfactory:1.0.0'
     kapt 'com.tuliomagalhaes:sweetfactory-compiler:1.0.0'
 }
 ```
@@ -47,7 +47,7 @@ Example
  
 ```kotlin
 interface FeatureAFactory {
-	fun newIntent(context: Context, param: String): Intent
+    fun newIntent(context: Context, param: String): Intent
 }
 ```
 
@@ -90,9 +90,7 @@ interface FeatureAFactory {
  I created a [sample app](sample/) that have 3 modules: featurea, featureb and navigation. 
  FeatureA calls FeatureB and FeatureB calls FeatureA. 
  Navigation module is responsible to have the factories declaration to be implemented in feature's module.
- 
-[Look here](sample/)
- 
+  
 License
 -------
  
