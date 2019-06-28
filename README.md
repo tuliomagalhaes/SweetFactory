@@ -63,8 +63,9 @@ interface FeatureAFactory {
         @JvmStatic
         @SweetFactoryMethod
         fun newIntent(context: Context, param: String): Intent {
-            val intent = Intent(context, FeatureAActivity::class.java)
-            intent.putExtra(PARAM_KEY, param)
+            return Intent(context, FeatureAActivity::class.java).apply {
+                putExtra(PARAM_KEY, param)
+            }
         }
     }
  }
