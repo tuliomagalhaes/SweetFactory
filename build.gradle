@@ -40,7 +40,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
@@ -51,7 +51,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC10"
+    id "io.gitlab.arturbosch.detekt" version "1.9.1"
 }
 
 allprojects {
