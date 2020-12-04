@@ -33,9 +33,9 @@ install {
                 developerConnection GIT_URL
                 url SITE_URL
             }
-            def deps = configurations.compile.allDependencies + configurations.implementation.allDependencies
+            def deps = configurations.implementation.allDependencies
             deps.each {
-                dependencies.add("compile", it)
+                dependencies.add("implementation", it)
             }
         }
     }
